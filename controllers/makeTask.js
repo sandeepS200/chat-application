@@ -1,32 +1,31 @@
 
 const ChatCommunity = require("../models/active.user.model")
-
-
-
+const userId="offLine";
+// const io = require("socket.io")(8000,{cors:{origin:"*"}});
 
 const dashboardData = async (req, res) => {
     try {
-        console.log(req._parsedUrl.query.split("=")[1]);
-       
-        const exitUser = await ChatCommunity.findOne({_id: req._parsedUrl.query.split("=")[1]})
-          if(exitUser){ 
-            const data = await ChatCommunity.find({_id:{$in:exitUser.contactList}})
-            res.render("dashboard",{
-                data:data
+        userId=req._parsedUrl.query.split("=")[1]
+        const exitUser = await ChatCommunity.findOne({ _id:userId })
+        if (exitUser) {
+            const data = await ChatCommunity.find({ _id: { $in: exitUser.contactList } })
+            res.render("dashboard", {
+                data: data
             })
-        }else{
+        } else {
             res.redirect("/login")
         }
-    }catch (error) {
+    } catch (error) {
         console.log(error.message);
     }
 }
 
 
 const getChat = async (req, res) => {
+    console.log("get");
     try {
         const targetId = req.params.id
-        console.log(targetId);
+        // console.log(targetId);
         const exitUser = await ChatCommunity.findById(targetId)
         if (exitUser) {
             const chat = exitUser.chatList
@@ -47,12 +46,12 @@ const getChat = async (req, res) => {
 const sendMessage = async (req, res) => {
     try {
         const [sender, receiver] = req.params.id.split("&&")
-        console.log(req.params.id.split("&&"));
+        // console.log(req.params.id.split("&&"));
         const { message } = req.body
-        console.log(req.body);
+        // console.log(req.body);
 
-        const exitUser = await ChatCommunity.find({$or:[{"_id":sender},{"_id":receiver}]})
-        console.log(exitUser);
+        const exitUser = await ChatCommunity.find({ $or: [{ "_id": sender }, { "_id": receiver }] })
+        // console.log(exitUser);
         if (exitUser.length != 0) {
             const chat = await ChatCommunity.updateMany({ _id: { $in: [sender, receiver] } }, {
                 $push: {
@@ -64,7 +63,10 @@ const sendMessage = async (req, res) => {
                 }
             })
             if (chat) {
-                res.send("Ok")
+            //    let destination = io.of(`/${receiver}`)
+            //    destination.on("connection",(socket)=>{
+            //     socket.emit("getChat","i am socket");
+            //    })
             }
         }
         else {
@@ -79,7 +81,7 @@ const sendMessage = async (req, res) => {
 const login = async (req, res) => {
     try {
         const { name, email, password, mobileNO } = req.body
-        console.log(req.body);
+        // console.log(req.body);
         const exitInput = await ChatCommunity.findOne({ $or: [{ activeMbNO: mobileNO }, { activeEmail: email }, { activePassword: password }] })
         const exitUser = await ChatCommunity.findOne({ $and: [{ activeEmail: email }, { activeMbNO: mobileNO }, { activePassword: password }] })
         if (exitUser) {
@@ -122,8 +124,8 @@ const addFriend = async (req, res) => {
         let _id = Exituser._id.toString();
         if (Exituser) {
             await ChatCommunity.updateOne({
-                $and: [{ _id: requester },{_id:{$ne:{_id}}}],
-                contactList:{ $nin: [Exituser._id] }
+                $and: [{ _id: requester }, { _id: { $ne: { _id } } }],
+                contactList: { $nin: [Exituser._id] }
             }
                 ,
                 {
@@ -147,5 +149,6 @@ module.exports = {
     sendMessage,
     login,
     addFriend,
-    dashboardData
+    dashboardData,
+    userId
 }
