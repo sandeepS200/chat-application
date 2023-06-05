@@ -8,6 +8,28 @@
     <title>Document</title>
     <link rel="stylesheet" href="/scss/dashboard.css">
     <style>
+        .input_container {
+            width: 13rem;
+            height: 20rem;
+            background-color: black;
+            margin-top: 1rem;
+            display: flex;
+            /* place-content: center; */
+            flex-direction: column;
+            align-items: center;
+           visibility:hidden;
+            overflow-y: scroll;
+            gap: 1rem;
+        }
+
+        .autoText {
+            background-color: white;
+            width: 80%;
+            height: 2rem;
+            display: grid;
+            place-items: center;
+            margin-top: 1rem;
+        }
     </style>
 </head>
 
@@ -25,7 +47,8 @@
                 </div>
             </div>
             <div class="searchbar">
-                <input type="text">
+                <input type="text" class="input">
+
             </div>
             <div class="friendscontainer">
                 {{#each data}}
@@ -38,6 +61,54 @@
                     </div>
                 </div>
                 {{/each}}
+                <div onclick="openChat(this)" class="friendcontainer" id="third">
+                    <div class="friendimg">
+                        <img src="./hanuman (2).jpg" alt="">
+                    </div>
+                    <div class="friendname">
+                        <h2>golu</h2>
+                    </div>
+                </div>
+                <div onclick="openChat(this)" class="friendcontainer" id="4">
+                    <div class="friendimg">
+                        <img src="./hanuman (2).jpg" alt="">
+                    </div>
+                    <div class="friendname">
+                        <h2>aman</h2>
+                    </div>
+                </div>
+                 <div onclick="openChat(this)" class="friendcontainer" id="4">
+                    <div class="friendimg">
+                        <img src="./hanuman (2).jpg" alt="">
+                    </div>
+                    <div class="friendname">
+                        <h2>anurag</h2>
+                    </div>
+                </div>
+                 <div onclick="openChat(this)" class="friendcontainer" id="4">
+                    <div class="friendimg">
+                        <img src="./hanuman (2).jpg" alt="">
+                    </div>
+                    <div class="friendname">
+                        <h2>ayush</h2>
+                    </div>
+                </div>
+                 <div onclick="openChat(this)" class="friendcontainer" id="4">
+                    <div class="friendimg">
+                        <img src="./hanuman (2).jpg" alt="">
+                    </div>
+                    <div class="friendname">
+                        <h2>kamal</h2>
+                    </div>
+                </div>
+                  <div onclick="openChat(this)" class="friendcontainer" id="4">
+                    <div class="friendimg">
+                        <img src="./hanuman (2).jpg" alt="">
+                    </div>
+                    <div class="friendname">
+                        <h2>sukala</h2>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="right_container">
@@ -57,8 +128,8 @@
             </div>
         </div>
     </div>
-    <script  src="http://localhost:3000/socket.io/socket.io.js"></script>
-     <script src="/index.js"></script>
+    <script src="http://localhost:3000/socket.io/socket.io.js"></script>
+    <script src="/index.js"></script>
 </body>
 
 </html>

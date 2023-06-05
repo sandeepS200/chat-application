@@ -1,12 +1,11 @@
 
 const ChatCommunity = require("../models/active.user.model")
-const userId="offLine";
-// const io = require("socket.io")(8000,{cors:{origin:"*"}});
+
 
 const dashboardData = async (req, res) => {
     try {
-        userId=req._parsedUrl.query.split("=")[1]
-        const exitUser = await ChatCommunity.findOne({ _id:userId })
+        userId = req._parsedUrl.query.split("=")[1]
+        const exitUser = await ChatCommunity.findOne({ _id: userId })
         if (exitUser) {
             const data = await ChatCommunity.find({ _id: { $in: exitUser.contactList } })
             res.render("dashboard", {
@@ -16,6 +15,7 @@ const dashboardData = async (req, res) => {
             res.redirect("/login")
         }
     } catch (error) {
+        res.send("OOPs 404 Error");
         console.log(error.message);
     }
 }
@@ -46,12 +46,8 @@ const getChat = async (req, res) => {
 const sendMessage = async (req, res) => {
     try {
         const [sender, receiver] = req.params.id.split("&&")
-        // console.log(req.params.id.split("&&"));
         const { message } = req.body
-        // console.log(req.body);
-
         const exitUser = await ChatCommunity.find({ $or: [{ "_id": sender }, { "_id": receiver }] })
-        // console.log(exitUser);
         if (exitUser.length != 0) {
             const chat = await ChatCommunity.updateMany({ _id: { $in: [sender, receiver] } }, {
                 $push: {
@@ -63,10 +59,7 @@ const sendMessage = async (req, res) => {
                 }
             })
             if (chat) {
-            //    let destination = io.of(`/${receiver}`)
-            //    destination.on("connection",(socket)=>{
-            //     socket.emit("getChat","i am socket");
-            //    })
+               
             }
         }
         else {
@@ -89,9 +82,7 @@ const login = async (req, res) => {
             res.redirect("/dashboard" + `?user=${exitUser._id}`)
         }
         else if (exitInput) {
-            res.json({
-                message: "this input already exit"
-            })
+            res.redirect("/login")
         }
         else {
             console.log("i am creating");
@@ -110,26 +101,25 @@ const login = async (req, res) => {
             }
         }
     } catch (error) {
-        console.log(error);
-        res.send("please try again because some")
+        res.redirect("/login")
+        // console.log(error);
+        // res.send("please try again because some")
     }
 }
 const addFriend = async (req, res) => {
     try {
         const { mobileNO } = req.body
-        console.log(req.body);
         const requester = req.params.id
-        console.log(req.params.id);
-        const Exituser = await ChatCommunity.findOne({ activeMbNO: mobileNO })
-        let _id = Exituser._id.toString();
-        if (Exituser) {
+        const exitUser = await ChatCommunity.findOne({ activeMbNO: mobileNO })
+        let _id = exitUser._id.toString();
+        if (exitUser) {
             await ChatCommunity.updateOne({
                 $and: [{ _id: requester }, { _id: { $ne: { _id } } }],
-                contactList: { $nin: [Exituser._id] }
+                contactList: { $nin: [exitUser._id] }
             }
                 ,
                 {
-                    $push: { contactList: Exituser._id }
+                    $push: { contactList:exitUser._id }
                 })
         }
         else {
@@ -150,5 +140,4 @@ module.exports = {
     login,
     addFriend,
     dashboardData,
-    userId
 }

@@ -1,15 +1,15 @@
-// const connectToDB = require("../config/database");
-// const app = require("./chat")
-// const port = process.env.PORT|| 3000
+const connectToDB = require("../config/database");
+const http = require("./chat")
+const port = process.env.PORT|| 3000
 
-// const start = async()=>{
-//     try {
-//         await connectToDB()
-//         app.listen(port,(error)=>{
-//             console.log("your server is started now");
-//         })
-//     } catch (error) {
-//         console.log("server is not start")
-//     }
-// }
-// start();
+const start = async () => {
+    try {
+        await connectToDB()
+       http.listen(port,()=>{
+        console.log("server is listen on port "+port);
+       })
+    } catch (error) {
+        console.log(error)
+    }
+}
+start();
