@@ -10,7 +10,7 @@ const dashboardData = async (req, res) => {
             const data = await ChatCommunity.find({ _id: { $in: exitUser.contactList } })
             res.render("dashboard", {
                 data: data,
-                user:exitUser
+                user: exitUser
             })
         } else {
             res.redirect("/login")
@@ -60,7 +60,7 @@ const sendMessage = async (req, res) => {
                 }
             })
             if (chat) {
-               
+
             }
         }
         else {
@@ -86,7 +86,6 @@ const login = async (req, res) => {
             res.redirect("/login")
         }
         else {
-            console.log("i am creating");
             const afterCreateRes = await ChatCommunity.create({
                 activeName: name,
                 activeEmail: email,
@@ -110,15 +109,16 @@ const addFriend = async (req, res) => {
         const { mobileNO } = req.body
         const requester = req.params.id
         const exitUser = await ChatCommunity.findOne({ activeMbNO: mobileNO })
+        let _id = exitUser._id.toString();
         if (exitUser) {
-            let _id = exitUser._id.toString();
+           
             await ChatCommunity.updateOne({
                 $and: [{ _id: requester }, { _id: { $ne: { _id } } }],
                 contactList: { $nin: [exitUser._id] }
             }
                 ,
                 {
-                    $push: { contactList:exitUser._id }
+                    $push: { contactList: exitUser._id }
                 })
         }
         else {

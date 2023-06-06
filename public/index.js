@@ -13,12 +13,17 @@ const numberInput = document.querySelector(".numberInput")
 const toggle = document.querySelector(".toggle")
 const fName = document.querySelector(".fName")
 const container = document.querySelector(".container")
-targetId = [...friendscontainer.children][0].getAttribute("id")
-targetName = [...friendscontainer.children][0].innerText
-friendscontainer.setAttribute("id", targetId)
-fName.innerHTML=targetName
-let notFilter = Array.from(friendscontainer.children)
-let temp = notFilter
+try {
+    targetId = [...friendscontainer.children][0].getAttribute("id")
+    targetName = [...friendscontainer.children][0].innerText
+    friendscontainer.setAttribute("id", targetId)
+    fName.innerHTML = targetName
+    let notFilter = Array.from(friendscontainer.children)
+    let temp = notFilter
+    getChats(friendscontainer.getAttribute("id"))
+} catch (error) {
+
+}
 
 const input = document.querySelector(".input")
 const autoComplete = (input, arr) => {
@@ -106,21 +111,22 @@ socket.on("receive", (id) => {
 
 
 
-getChats(friendscontainer.getAttribute("id"))
+
 
 const openChat = (value) => {
     chat_container.innerHTML = ""
     right_container.style.visibility = "visible"
     container.classList.add("active")
-    targetName=value.innerText;
+    targetName = value.innerText;
     targetId = value.getAttribute("id");
     friendscontainer.setAttribute("id", targetId)
-    fName.innerHTML=targetName
+    fName.innerHTML = targetName
     getChats(targetId)
 }
 
 
 const sendMessage = async (value) => {
+    messageInput
     try {
         let json = {
             message: messageInput.value
