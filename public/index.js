@@ -13,25 +13,16 @@ const numberInput = document.querySelector(".numberInput")
 const toggle = document.querySelector(".toggle")
 const fName = document.querySelector(".fName")
 const container = document.querySelector(".container")
-try {
-    targetId = [...friendscontainer.children][0].getAttribute("id")
-    targetName = [...friendscontainer.children][0].innerText
-    friendscontainer.setAttribute("id", targetId)
-    fName.innerHTML = targetName
-    let notFilter = Array.from(friendscontainer.children)
-    let temp = notFilter
-    getChats(friendscontainer.getAttribute("id"))
-} catch (error) {
-
-}
-
-const input = document.querySelector(".input")
-const autoComplete = (input, arr) => {
-    if (input.value.trim() !== "") {
+let notFilter = Array.from(friendscontainer.children)
+console.log(notFilter);
+let temp;
+const searchFreindInput = document.querySelector(".searchFreindInput")
+const autoComplete = (searchFreindInput, arr) => {
+    if (searchFreindInput.value.trim() !== "") {
         friendscontainer.innerHTML = ""
-        let input_value = input.value.trim();
+        let searchFreindInput_value = searchFreindInput.value.trim();
         let filteredElementBox = arr.filter((notFilteredElement) => {
-            return notFilteredElement.innerText.trim().slice(0, input_value.length) === input_value
+            return notFilteredElement.innerText.trim().slice(0, searchFreindInput_value.length) === searchFreindInput_value
         }).map((filteredElement) => {
             // filteredElement.getAttribute("id")
             friendscontainer.innerHTML += filteredElement.outerHTML
@@ -48,8 +39,10 @@ const autoComplete = (input, arr) => {
         })
     }
 }
-input.addEventListener("input", () => {
-    autoComplete(input, temp)
+searchFreindInput.addEventListener("input", () => {
+    if (notFilter.length != 0) {
+        autoComplete(searchFreindInput, temp)
+    }
 })
 
 
@@ -60,19 +53,23 @@ toggle.addEventListener("click", () => {
 // const socket = io("/admin");
 const addFriend = async () => {
     try {
-        const json = {
-            mobileNO: numberInput.value,
-        }
-        console.log(numberInput.value);
-        console.log(userId)
-        fetch(`/api/v1/task/${userId}`, {
-            method: "PATCH",
-            body: JSON.stringify(json),
-            headers: {
-                "Content-Type": "application/json"
+        if (parseInt(numberInput.value).toString().length === 10 && parseInt(numberInput.value) !== NaN) {
+            const json = {
+                mobileNO: numberInput.value,
             }
-        })
-        location.reload()
+            console.log(numberInput.value);
+            console.log(userId)
+            let res = await fetch(`/api/v1/task/${userId}`, {
+                method: "PATCH",
+                body: JSON.stringify(json),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+            if (res.statusCode == 200) {
+                location.reload()
+            }
+        }
     } catch (error) {
         console.log(error);
     }
@@ -82,6 +79,7 @@ const addFriend = async () => {
 //this  is getchat code
 const getChats = async (targetId) => {
     try {
+      if(targetId !==""){
         let chatHtml = ""
         const getChats = await fetch(`/api/v1/task/${targetId}`, { method: "GET" })
         const chats = await getChats.json()
@@ -93,6 +91,7 @@ const getChats = async (targetId) => {
             chatHtml += chatMessages
         })
         chat_container.innerHTML = chatHtml;
+      }
     } catch (error) {
         console.log(error);
     }
@@ -144,3 +143,18 @@ const sendMessage = async (value) => {
         console.log(error);
     }
 }
+
+
+(() => {
+    if (notFilter.length !== 0) {
+        targetId = [...friendscontainer.children][0].getAttribute("id")
+        targetName = [...friendscontainer.children][0].innerText
+        friendscontainer.setAttribute("id", targetId)
+        fName.innerHTML = targetName
+        temp = notFilter
+        getChats(friendscontainer.getAttribute("id"))
+    }
+    else {
+        friendscontainer.innerHTML = "Add friends"
+    }
+})();

@@ -119,7 +119,10 @@ const addFriend = async (req, res) => {
                 ,
                 {
                     $push: { contactList: exitUser._id }
-                })
+                });
+            res.status(200).json({
+                statusCode:200,
+            })
         }
         else {
             res.status(200).json({
