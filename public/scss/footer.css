@@ -1,0 +1,50 @@
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+footer {
+  margin-top: auto;
+}
+
+.footer_container {
+  background-color: #6364e4;
+  padding: 0.5rem;
+  height: auto;
+  color: white;
+}
+.footer_container .footer {
+  display: flex;
+  gap: 1rem;
+}
+.footer_container .footer .about,
+.footer_container .footer .contact {
+  padding: 1rem;
+}
+.footer_container .footer .about div,
+.footer_container .footer .contact div {
+  margin-top: 1rem;
+}
+.footer_container .footer .about div i,
+.footer_container .footer .contact div i {
+  font-size: 1rem;
+}
+.footer_container .footer .contact_f,
+.footer_container .footer .about_f {
+  width: 50%;
+}
+.footer_container .footer .contact_f .about_links,
+.footer_container .footer .about_f .about_links {
+  margin-top: 2rem;
+  display: flex;
+  gap: 1rem;
+}
+.footer_container .footer .contact_f .about_links img,
+.footer_container .footer .about_f .about_links img {
+  width: 1.8rem;
+}/*# sourceMappingURL=footer.css.map */

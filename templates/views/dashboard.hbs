@@ -6,6 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/solid.min.css" integrity="sha512-bdTSJB23zykBjGDvyuZUrLhHD0Rfre0jxTd0/jpTbV7sZL8DCth/88aHX0bq2RV8HK3zx5Qj6r2rRU/Otsjk+g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="/scss/dashboard.css">
     <style>
         .input_container {
@@ -17,7 +19,7 @@
             /* place-content: center; */
             flex-direction: column;
             align-items: center;
-           visibility:hidden;
+            visibility: hidden;
             overflow-y: scroll;
             gap: 1rem;
         }
@@ -38,23 +40,28 @@
     <div class="container">
         <div class="left_container">
             <div class="header">
-                <div class="userimg">
-                    <img src="./hanuman (2).jpg" alt="">
+                <div class="user_info">
+                    <div class="userimg">
+                        <img src="/img/hanuman (2).jpg" alt="">
+                    </div>
+                    <div class="user_name">
+                        <h2>{{user.activeName}}</h2>
+                    </div>
                 </div>
                 <div class="usericons">
-                    <button onclick="addFriend()">add</button>
-                    <input class="numberInput" type="text">
+                    <button class="add" onclick="addFriend()">+</button>
+                    <input placeholder="number..." class="numberInput" type="text">
                 </div>
             </div>
             <div class="searchbar">
-                <input type="text" class="input">
+                <input type="text" placeholder="search..." class="input">
 
             </div>
             <div class="friendscontainer">
                 {{#each data}}
                 <div onclick="openChat(this)" class="friendcontainer" id="{{_id}}">
                     <div class="friendimg">
-                        <img src="./hanuman (2).jpg" alt="">
+                        <img src="/img/hanuman (2).jpg" alt="">
                     </div>
                     <div class="friendname">
                         <h2>{{activeName}}</h2>
@@ -63,7 +70,7 @@
                 {{/each}}
                 <div onclick="openChat(this)" class="friendcontainer" id="third">
                     <div class="friendimg">
-                        <img src="./hanuman (2).jpg" alt="">
+                        <img src="/img/hanuman (2).jpg" alt="">
                     </div>
                     <div class="friendname">
                         <h2>golu</h2>
@@ -71,39 +78,39 @@
                 </div>
                 <div onclick="openChat(this)" class="friendcontainer" id="4">
                     <div class="friendimg">
-                        <img src="./hanuman (2).jpg" alt="">
+                        <img src="/img/hanuman (2).jpg" alt="">
                     </div>
                     <div class="friendname">
                         <h2>aman</h2>
                     </div>
                 </div>
-                 <div onclick="openChat(this)" class="friendcontainer" id="4">
+                <div onclick="openChat(this)" class="friendcontainer" id="4">
                     <div class="friendimg">
-                        <img src="./hanuman (2).jpg" alt="">
+                        <img src="/img/hanuman (2).jpg" alt="">
                     </div>
                     <div class="friendname">
                         <h2>anurag</h2>
                     </div>
                 </div>
-                 <div onclick="openChat(this)" class="friendcontainer" id="4">
+                <div onclick="openChat(this)" class="friendcontainer" id="4">
                     <div class="friendimg">
-                        <img src="./hanuman (2).jpg" alt="">
+                        <img src="/img/hanuman (2).jpg" alt="">
                     </div>
                     <div class="friendname">
                         <h2>ayush</h2>
                     </div>
                 </div>
-                 <div onclick="openChat(this)" class="friendcontainer" id="4">
+                <div onclick="openChat(this)" class="friendcontainer" id="4">
                     <div class="friendimg">
-                        <img src="./hanuman (2).jpg" alt="">
+                        <img src="/img/hanuman (2).jpg" alt="">
                     </div>
                     <div class="friendname">
                         <h2>kamal</h2>
                     </div>
                 </div>
-                  <div onclick="openChat(this)" class="friendcontainer" id="4">
+                <div onclick="openChat(this)" class="friendcontainer" id="4">
                     <div class="friendimg">
-                        <img src="./hanuman (2).jpg" alt="">
+                        <img src="/img/hanuman (2).jpg" alt="">
                     </div>
                     <div class="friendname">
                         <h2>sukala</h2>
@@ -113,19 +120,25 @@
         </div>
         <div class="right_container">
             <div class="header">
-                <div class="userimg">
-                    <img src="./hanuman (2).jpg" alt="">
-                </div>
-                <div class="usericons">
+                <div class="user_info">
+                    <div class="userimg">
+                        <img src="/img/hanuman (2).jpg" alt="">
+                    </div>
+                    <div class="user_name">
+                        <h2 class="fName"></h2>
+                    </div>
                 </div>
             </div>
             <div class="chat_container">
 
             </div>
             <div class="send_container">
-                <button onclick="sendMessage()">Send</button>
-                <input class="messageInput" type="text">
+                <i class="fa-solid fa-paper-plane" onclick="sendMessage()"></i>
+                <input class="messageInput" placeholder="Message..." type="text">
             </div>
+        </div>
+        <div class="toggle">
+            toggle
         </div>
     </div>
     <script src="http://localhost:3000/socket.io/socket.io.js"></script>

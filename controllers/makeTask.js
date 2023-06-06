@@ -9,7 +9,8 @@ const dashboardData = async (req, res) => {
         if (exitUser) {
             const data = await ChatCommunity.find({ _id: { $in: exitUser.contactList } })
             res.render("dashboard", {
-                data: data
+                data: data,
+                user:exitUser
             })
         } else {
             res.redirect("/login")
@@ -102,8 +103,6 @@ const login = async (req, res) => {
         }
     } catch (error) {
         res.redirect("/login")
-        // console.log(error);
-        // res.send("please try again because some")
     }
 }
 const addFriend = async (req, res) => {
@@ -111,8 +110,8 @@ const addFriend = async (req, res) => {
         const { mobileNO } = req.body
         const requester = req.params.id
         const exitUser = await ChatCommunity.findOne({ activeMbNO: mobileNO })
-        let _id = exitUser._id.toString();
         if (exitUser) {
+            let _id = exitUser._id.toString();
             await ChatCommunity.updateOne({
                 $and: [{ _id: requester }, { _id: { $ne: { _id } } }],
                 contactList: { $nin: [exitUser._id] }

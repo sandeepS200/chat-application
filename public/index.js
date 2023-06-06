@@ -2,14 +2,21 @@
 let userId = window.location.search.split("=")[1];
 const socket = io(`/admin`)
 let targetId;
+let targetName;
 const chatcontainer = document.querySelector(".chatcontainer")
 const messageInput = document.querySelector(".messageInput")
 const chat_container = document.querySelector(".chat_container")
+const right_container = document.querySelector(".right_container")
 const friendscontainer = document.querySelector(".friendscontainer")
 const friendname = document.querySelectorAll(".friendname")
 const numberInput = document.querySelector(".numberInput")
+const toggle = document.querySelector(".toggle")
+const fName = document.querySelector(".fName")
+const container = document.querySelector(".container")
 targetId = [...friendscontainer.children][0].getAttribute("id")
+targetName = [...friendscontainer.children][0].innerText
 friendscontainer.setAttribute("id", targetId)
+fName.innerHTML=targetName
 let notFilter = Array.from(friendscontainer.children)
 let temp = notFilter
 
@@ -26,7 +33,7 @@ const autoComplete = (input, arr) => {
             return filteredElement
         })
         if (filteredElementBox.length == 0) {
-            friendscontainer.innerHTML = " not foun"
+            friendscontainer.innerHTML = `<div style="width:80%; height:100%; text-align:center;">Not Found </div>`
         }
     }
     else {
@@ -41,7 +48,10 @@ input.addEventListener("input", () => {
 })
 
 
-
+toggle.addEventListener("click", () => {
+    right_container.style.visibility = "hidden"
+    container.classList.remove("active")
+})
 // const socket = io("/admin");
 const addFriend = async () => {
     try {
@@ -99,8 +109,13 @@ socket.on("receive", (id) => {
 getChats(friendscontainer.getAttribute("id"))
 
 const openChat = (value) => {
+    chat_container.innerHTML = ""
+    right_container.style.visibility = "visible"
+    container.classList.add("active")
+    targetName=value.innerText;
     targetId = value.getAttribute("id");
     friendscontainer.setAttribute("id", targetId)
+    fName.innerHTML=targetName
     getChats(targetId)
 }
 

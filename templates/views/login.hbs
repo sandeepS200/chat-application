@@ -1,18 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <link rel="stylesheet" href="/scss/login.css">
 </head>
+
 <body>
-    <form action="api/v1/task/login" method="post">
-        <input type="text" name="name">
-        <input type="email" name="email">
-        <input type="password" name="password">
-        <input type="text" name="mobileNO">
-        <button type="submit">Login</button>
-    </form>
+    <div class="login_container">
+        <form action="api/v1/task/login" method="post">
+            <div class="login_icon">
+
+            </div>
+            <div class="input_field_container">
+                <input type="text" required autocomplete="off" name="name">
+                <input type="email" required autocomplete="off" name="email">
+                <input type="password" required autocomplete="off" name="password">
+                <input type="text" required autocomplete="off" name="mobileNO">
+                <button class="submit_btn" type="submit">Login</button>
+            </div>
+        </form>
+    </div>
 </body>
+
 </html>

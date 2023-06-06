@@ -1,0 +1,61 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 70%;
+}
+
+header {
+  width: 100%;
+  background-color: #6364e4;
+}
+header nav {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  height: 3.5rem;
+  justify-content: space-between;
+  list-style: none;
+  color: white;
+  padding: 0rem 0.5rem;
+}
+
+a {
+  text-decoration: none;
+}
+
+.hero_container {
+  width: 100%;
+  height: 45vh;
+  background-image: url("/img/home_hero_banner.jpg");
+  background-size: 100% 100%;
+}
+.hero_container .hero_wrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.5rem;
+  align-content: center;
+  justify-content: center;
+}
+.hero_container .hero_wrapper p {
+  text-align: center;
+}
+.hero_container .hero_wrapper a {
+  padding: 0.5rem 1.5rem;
+  background: #12296b;
+  outline: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+@media (min-width: 768px) {
+  .hero_container {
+    height: 85vh;
+  }
+}/*# sourceMappingURL=home.css.map */
