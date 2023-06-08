@@ -12,4 +12,4 @@ const activeStructure = mongoose.Schema({
 
 // now here export this active Structure
 
-module.exports= mongoose.model("user",activeStructure);
+module.exports= mongoose.model("users",activeStructure);
