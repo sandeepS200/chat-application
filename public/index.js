@@ -54,6 +54,7 @@ toggle.addEventListener("click", () => {
 const addFriend = async () => {
     try {
         if (parseInt(numberInput.value).toString().length === 10 && parseInt(numberInput.value) !== NaN) {
+            console.log(parseInt(numberInput.value).toString().length);
             const json = {
                 mobileNO: numberInput.value,
             }
@@ -79,19 +80,19 @@ const addFriend = async () => {
 //this  is getchat code
 const getChats = async (targetId) => {
     try {
-      if(targetId !==""){
-        let chatHtml = ""
-        const getChats = await fetch(`/api/v1/task/${targetId}`, { method: "GET" })
-        const chats = await getChats.json()
-        let margin = 0;
-        chats.chat.filter((chat) => chat.sender === userId || chat.receiver === userId).map(chat => {
-            let chatMessages = `<div class="message"  style=${userId === chat.sender ? `left:70%;top:${++margin * 10}%;` : `left:10%;top:${++margin * 10}%;`}>
+        if (targetId !== "") {
+            let chatHtml = ""
+            const getChats = await fetch(`/api/v1/task/${targetId}`, { method: "GET" })
+            const chats = await getChats.json()
+            let margin = 0;
+            chats.chat.filter((chat) => chat.sender === userId || chat.receiver === userId).map(chat => {
+                let chatMessages = `<div class="message"  style=${userId === chat.sender ? `left:70%;top:${++margin * 10}%;` : `left:10%;top:${++margin * 10}%;`}>
                 <p>${chat.message}</p>
             </div>`
-            chatHtml += chatMessages
-        })
-        chat_container.innerHTML = chatHtml;
-      }
+                chatHtml += chatMessages
+            })
+            chat_container.innerHTML = chatHtml;
+        }
     } catch (error) {
         console.log(error);
     }
@@ -124,8 +125,7 @@ const openChat = (value) => {
 }
 
 
-const sendMessage = async (value) => {
-    messageInput
+const sendMessage = async () => {
     try {
         let json = {
             message: messageInput.value
@@ -144,17 +144,21 @@ const sendMessage = async (value) => {
     }
 }
 
-
-(() => {
-    if (notFilter.length !== 0) {
-        targetId = [...friendscontainer.children][0].getAttribute("id")
-        targetName = [...friendscontainer.children][0].innerText
-        friendscontainer.setAttribute("id", targetId)
-        fName.innerHTML = targetName
-        temp = notFilter
-        getChats(friendscontainer.getAttribute("id"))
+messageInput.addEventListener("keypress", (event) => {
+    if (event.key === "Enter") {
+        sendMessage();
     }
-    else {
-        friendscontainer.innerHTML = "Add friends"
-    }
-})();
+})
+    (() => {
+        if (notFilter.length !== 0) {
+            targetId = [...friendscontainer.children][0].getAttribute("id")
+            targetName = [...friendscontainer.children][0].innerText
+            friendscontainer.setAttribute("id", targetId)
+            fName.innerHTML = targetName
+            temp = notFilter
+            getChats(friendscontainer.getAttribute("id"))
+        }
+        else {
+            friendscontainer.innerHTML = "Add friends"
+        }
+    })();
