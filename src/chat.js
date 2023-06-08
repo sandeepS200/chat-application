@@ -1,7 +1,6 @@
 const express = require("express");
 const path = require("path");
 const hbs = require("hbs")
-require("dotenv").config();
 const { dashboardData} = require("../controllers/makeTask");
 const router = require("../routers/chatRouter");
 const publicPath = path.join(__dirname, "../public");
