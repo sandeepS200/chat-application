@@ -1,5 +1,5 @@
-const connectToDB = require("../config/database");
-const http = require("./chat")
+const connectToDB = require("./config/database");
+const http = require("./src/chat")
 const port = process.env.PORT|| 3000
 const start = async () => {
     try {
