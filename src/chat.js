@@ -17,8 +17,7 @@ const http = require("http").createServer(app)
 
 
 const io = require("socket.io")(http);
-var admin = io.of("sandeepchat.onrender.com/admin")
-admin.on("connection",(socket)=>{
+io.on("connection",(socket)=>{
     socket.on("send",(targetId)=>{
         socket.broadcast.emit("receive",targetId)
     })
