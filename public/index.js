@@ -53,23 +53,23 @@ toggle.addEventListener("click", () => {
 // const socket = io("/admin");
 const addFriend = async () => {
     try {
-        if (parseInt(numberInput.value).toString().length === 10 && parseInt(numberInput.value) !== NaN) {
+        if (numberInput.value!=="") {
             console.log(parseInt(numberInput.value).toString().length);
             const json = {
                 mobileNO: numberInput.value,
             }
             console.log(numberInput.value);
             console.log(userId)
-            let res = await fetch(`/api/v1/task/${userId}`, {
+            await fetch(`/api/v1/task/${userId}`, {
                 method: "PATCH",
                 body: JSON.stringify(json),
                 headers: {
                     "Content-Type": "application/json"
                 }
             })
-            if (res.statusCode == 200) {
+           
                 location.reload()
-            }
+            
         }
     } catch (error) {
         console.log(error);
@@ -143,22 +143,23 @@ const sendMessage = async () => {
         console.log(error);
     }
 }
+(() => {
+    if (notFilter.length !== 0) {
+        targetId = [...friendscontainer.children][0].getAttribute("id")
+        targetName = [...friendscontainer.children][0].innerText
+        friendscontainer.setAttribute("id", targetId)
+        fName.innerHTML = targetName
+        temp = notFilter
+        getChats(friendscontainer.getAttribute("id"))
+    }
+    else {
+        friendscontainer.innerHTML = "Add friends"
+    }
+})();
 
 messageInput.addEventListener("keypress", (event) => {
     if (event.key === "Enter") {
         sendMessage();
     }
 })
-    (() => {
-        if (notFilter.length !== 0) {
-            targetId = [...friendscontainer.children][0].getAttribute("id")
-            targetName = [...friendscontainer.children][0].innerText
-            friendscontainer.setAttribute("id", targetId)
-            fName.innerHTML = targetName
-            temp = notFilter
-            getChats(friendscontainer.getAttribute("id"))
-        }
-        else {
-            friendscontainer.innerHTML = "Add friends"
-        }
-    })();
+   
