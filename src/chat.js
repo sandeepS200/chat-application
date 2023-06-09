@@ -17,7 +17,8 @@ const http = require("http").createServer(app)
 
 
 const io = require("socket.io")(http);
-io.on("connection",(socket)=>{
+const connection_path = io.of("/admin")
+connection_path.on("connection",(socket)=>{
     socket.on("send",(targetId)=>{
         socket.broadcast.emit("receive",targetId)
     })
