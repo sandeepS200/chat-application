@@ -1,6 +1,6 @@
 
 let userId = window.location.search.split("=")[1];
-const socket = io(`/admin`)
+const socket = io("sandeepchat.onrender.com/admin")
 let targetId;
 let targetName;
 const chatcontainer = document.querySelector(".chatcontainer")
@@ -50,7 +50,7 @@ toggle.addEventListener("click", () => {
     right_container.style.visibility = "hidden"
     container.classList.remove("active")
 })
-// const socket = io("/admin");
+// const socket = io("sandeepchat.onrender.com/admin");
 const addFriend = async () => {
     try {
         if (numberInput.value!=="") {
